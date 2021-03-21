@@ -10,7 +10,7 @@ const getUnixTime = require('date-fns/getUnixTime');
  * In-Memory Store
  */
 
-const adapter = new FileSync('../../db.json');
+const adapter = new FileSync('db.json');
 const db = low(adapter);
 
 // Set some defaults (required if your JSON file is empty)

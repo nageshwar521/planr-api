@@ -23,6 +23,10 @@ var authRouter = express.Router();
 // ─── CONTROLLER DEFINITIONS ─────────────────────────────────────────────────────
 //
 
+authRouter.get('/public', async (req, res) => {
+  res.json(generateSuccessResponse());
+});
+
 //
 // ─── LOGIN ──────────────────────────────────────────────────────────────────────
 //
