@@ -1,13 +1,13 @@
 require('dotenv').config();
-import { errorHandler } from './common/error.middleware';
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import { tasksRouter } from './tasks/tasks.router';
-import { notFoundHandler } from './common/notFound.middleware';
-import { authRouter } from './auth/auth.router';
-import verifyToken from './auth/auth.middleware';
-import { responseEnhancer } from 'express-response-formatter';
+const { errorHandler } = require('./common/error.middleware');
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const { tasksRouter } = require('./tasks/tasks.router');
+const { notFoundHandler } = require('./common/notFound.middleware');
+const { authRouter } = require('./auth/auth.router');
+const { verifyToken } = require('./auth/auth.middleware');
+const { responseEnhancer } = require('express-response-formatter');
 
 if (!process.env.PORT) {
   process.exit(1);
@@ -31,8 +31,3 @@ app.use(responseEnhancer);
 const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-
-if (module.hot) {
-  module.hot.accept();
-  module.hot.dispose(() => server.close());
-}

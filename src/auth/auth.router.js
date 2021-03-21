@@ -2,14 +2,14 @@
 // ─── REQUIRED EXTERNAL MODULES AND INTERFACES ───────────────────────────────────
 //
 
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import { getSecretRefreshToken } from '../common/common.utils';
-import { createAuthToken } from './auth.utils';
-import {
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const { getSecretRefreshToken } = require('../common/common.utils');
+const { createAuthToken } = require('./auth.utils');
+const {
   generateErrorResponse,
   generateSuccessResponse,
-} from '../utils/generateResponse';
+} = require('../utils/generateResponse');
 
 const refreshTokens = [];
 
@@ -17,7 +17,7 @@ const refreshTokens = [];
 // ─── ROUTER DEFINITION ──────────────────────────────────────────────────────────
 //
 
-export const authRouter = express.Router();
+var authRouter = express.Router();
 
 //
 // ─── CONTROLLER DEFINITIONS ─────────────────────────────────────────────────────
@@ -73,3 +73,5 @@ authRouter.post('/token', async (req, res, next) => {
     res.json(generateSuccessResponse({ accessToken }));
   });
 });
+
+module.exports = { authRouter };

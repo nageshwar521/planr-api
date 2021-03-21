@@ -18,4 +18,4 @@ const generateErrorResponse = ({ message, error }) => {
   return result;
 };
 
-export { generateSuccessResponse, generateErrorResponse };
+module.exports = { generateSuccessResponse, generateErrorResponse };

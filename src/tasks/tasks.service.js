@@ -3,8 +3,8 @@
  */
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
-import { v4 as uuidv4 } from 'uuid';
-import getUnixTime from 'date-fns/getUnixTime';
+const uuid = require('uuid');
+const getUnixTime = require('date-fns/getUnixTime');
 
 /**
  * In-Memory Store
@@ -20,7 +20,7 @@ db.defaults({ tasks: [] }).write();
  * Service Methods
  */
 
-export const findAll = async () => {
+var findAll = async () => {
   return db
     .get('tasks')
     .sort((a, b) => {
@@ -32,7 +32,7 @@ export const findAll = async () => {
     .value();
 };
 
-export const find = async (id) => {
+var find = async (id) => {
   const record = db.get('tasks').find({ id }).value();
 
   if (record) {
@@ -42,8 +42,8 @@ export const find = async (id) => {
   throw new Error('No record found!');
 };
 
-export const create = async (taskItem) => {
-  const id = uuidv4();
+var create = async (taskItem) => {
+  const id = uuid.v4();
 
   const newTask = {
     ...taskItem,
@@ -54,7 +54,7 @@ export const create = async (taskItem) => {
   db.get('tasks').push(newTask).write();
 };
 
-export const update = async (updatedTask) => {
+var update = async (updatedTask) => {
   const oldTask = db.get('tasks').find({ id: updatedTask.id });
   if (oldTask) {
     oldTask
@@ -68,7 +68,7 @@ export const update = async (updatedTask) => {
   throw new Error('No record found to update');
 };
 
-export const remove = async (id) => {
+var remove = async (id) => {
   const record = db.get('tasks').find({ id }).value();
 
   if (record) {
@@ -77,4 +77,12 @@ export const remove = async (id) => {
   }
 
   throw new Error('No record found to delete');
+};
+
+module.exports = {
+  findAll,
+  find,
+  create,
+  update,
+  remove,
 };

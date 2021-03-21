@@ -14,4 +14,4 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-export { getSecretAccessToken, getSecretRefreshToken, fileFilter };
+module.exports = { getSecretAccessToken, getSecretRefreshToken, fileFilter };

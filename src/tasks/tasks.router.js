@@ -2,19 +2,19 @@
 // ─── REQUIRED EXTERNAL MODULES AND INTERFACES ───────────────────────────────────
 //
 
-import express from 'express';
-import * as tasksService from './tasks.service';
-import { uploadFile } from '../common/uploadFile.middleware';
-import {
+const express = require('express');
+const tasksService = require('./tasks.service');
+const { uploadFile } = require('../common/uploadFile.middleware');
+const {
   generateErrorResponse,
   generateSuccessResponse,
-} from '../utils/generateResponse';
+} = require('../utils/generateResponse');
 
 //
 // ─── ROUTER DEFINITION ──────────────────────────────────────────────────────────
 //
 
-export const tasksRouter = express.Router();
+var tasksRouter = express.Router();
 
 //
 // ─── CONTROLLER DEFINITIONS ─────────────────────────────────────────────────────
@@ -108,3 +108,5 @@ tasksRouter.delete('/', async (req, res) => {
       .send(generateErrorResponse({ message: 'Delete plan failed!', error }));
   }
 });
+
+module.exports = { tasksRouter };

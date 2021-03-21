@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import { getSecretAccessToken } from '../common/common.utils';
-import { generateErrorResponse } from '../utils/generateResponse';
+const jwt = require('jsonwebtoken');
+const { getSecretAccessToken } = require('../common/common.utils');
+const { generateErrorResponse } = require('../utils/generateResponse');
 
 const verifyToken = (req, res, next) => {
   // console.log('middleware: basic auth');
@@ -31,4 +31,4 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-export default verifyToken;
+module.exports = { verifyToken };
