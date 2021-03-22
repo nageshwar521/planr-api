@@ -2,3 +2,4 @@
   command = "npm install && npm run build"
   functions = "functions"
   publish = "build"
+  build = "build"
