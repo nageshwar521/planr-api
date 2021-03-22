@@ -22,7 +22,11 @@ const verifyToken = (req, res, next) => {
         res.status(403).send(
           generateErrorResponse({
             message: 'session timeout',
-            error: err,
+            error: {
+              err,
+              token,
+              secretToken,
+            },
           })
         );
       }
