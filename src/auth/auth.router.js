@@ -33,13 +33,6 @@ authRouter.get('/public', async (req, res) => {
 
 authRouter.post('/login', async (req, res) => {
   const user = req.body;
-
-  // res.json(
-  //   generateErrorResponse({
-  //     error: { user, refreshToken: 'refresh token error' },
-  //   })
-  // );
-
   const secretRefreshToken = getSecretRefreshToken();
   if (secretRefreshToken) {
     const refreshToken = await jwt.sign(user, secretRefreshToken);
