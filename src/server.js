@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const { tasksRouter } = require('./tasks/tasks.router');
 const { authRouter } = require('./auth/auth.router');
 const { verifyToken } = require('./auth/auth.middleware');
+const morgan = require('morgan');
 const router = express.Router();
 
 const app = express();
@@ -13,6 +14,8 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(morgan('combined'));
+
 router.use('/', authRouter);
 router.use('/tasks', verifyToken, tasksRouter);
 

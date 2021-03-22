@@ -36,7 +36,7 @@ authRouter.post('/login', async (req, res) => {
 
   res.json(
     generateErrorResponse({
-      error: { user, refreshToken: process.env.REFRESH_TOKEN_SECRET },
+      error: { user, refreshToken: 'refresh token error' },
     })
   );
 
