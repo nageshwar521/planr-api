@@ -1,4 +1,4 @@
-POST https://6058895aeb15813772b41720--myplanr.netlify.app/.netlify/functions/server/login
+POST https://myplanr.netlify.app/.netlify/functions/server/login
 Content-Type: application/json
 
 {
