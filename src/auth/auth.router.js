@@ -46,7 +46,11 @@ authRouter.post('/login', async (req, res) => {
     const accessToken = createAuthToken(user, secretRefreshToken);
     res.json(generateSuccessResponse({ accessToken, refreshToken }));
   } else {
-    res.json(generateErrorResponse({ error: 'refresh token not found' }));
+    res.json(
+      generateErrorResponse({
+        error: `refresh token not found: ${secretRefreshToken}`,
+      })
+    );
   }
 });
 
