@@ -11,4 +11,4 @@ Content-Type: application/json
 ###
 
 GET https://myplanr.netlify.app/.netlify/functions/server/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTY0MzcyOTUsImV4cCI6MTYxNjQzNzU5NX0.5M4j_Ze7M8BxRkzCDN4PQSpmsbDv3t_yJ2LVmvxmbpQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTY0Mzc4OTgsImV4cCI6MTYxNjQzODE5OH0.NgXRQ0nCQQaH3KtSM1cjJEBi2rC7Jp7aZamIXUdv5-0

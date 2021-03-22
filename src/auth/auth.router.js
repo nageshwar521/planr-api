@@ -34,10 +34,9 @@ authRouter.get('/public', async (req, res) => {
 authRouter.post('/login', async (req, res) => {
   const user = req.body;
   try {
-    const secretRefreshToken = getSecretRefreshToken();
-    const refreshToken = await jwt.sign(user, secretRefreshToken);
-    const accessToken = createAuthToken(user, secretRefreshToken);
-    res.json(generateSuccessResponse({ accessToken, refreshToken }));
+    const secretAccessToken = getSecretAccessToken();
+    const accessToken = createAuthToken(user, secretAccessToken);
+    res.json(generateSuccessResponse({ accessToken }));
   } catch (error) {
     res.json(
       generateErrorResponse({
