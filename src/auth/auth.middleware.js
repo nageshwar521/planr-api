@@ -15,20 +15,30 @@ const verifyToken = (req, res, next) => {
       .status(401)
       .send(generateErrorResponse({ message: 'token not found', error: null }));
   }
+  const secretToken = getSecretAccessToken();
+  if (secretToken) {
+    jwt.verify(token, secretToken, (err, user) => {
+      if (err) {
+        res.status(403).send(
+          generateErrorResponse({
+            message: 'session timeout',
+            error: err,
+          })
+        );
+      }
 
-  jwt.verify(token, getSecretAccessToken(), (err, user) => {
-    if (err) {
-      res.status(403).send(
-        generateErrorResponse({
-          message: 'session timeout',
-          error: err,
-        })
-      );
-    }
-
-    req.body = { ...req.body, user };
+      req.body = { ...req.body, user };
+      next();
+    });
+  } else {
+    res.status(403).send(
+      generateErrorResponse({
+        message: 'secret token not found',
+        error: null,
+      })
+    );
     next();
-  });
+  }
 };
 
 module.exports = { verifyToken };

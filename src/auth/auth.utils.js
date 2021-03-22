@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { getSecretAccessToken } = require('../common/common.utils');
 
-const createAuthToken = (user) => {
-  const secretToken = getSecretAccessToken();
+const createAuthToken = (user, secretToken) => {
   return jwt.sign(user, secretToken, { expiresIn: '5m' });
 };
 

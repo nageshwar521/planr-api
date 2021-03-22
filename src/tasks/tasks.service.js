@@ -1,88 +1,94 @@
-/**
- * Data Model Interfaces
- */
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
+const faunadb = require('faunadb');
 const uuid = require('uuid');
-const getUnixTime = require('date-fns/getUnixTime');
 
-/**
- * In-Memory Store
- */
+const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET });
 
-const adapter = new FileSync('db.json');
-const db = low(adapter);
+const {
+  Ref,
+  Paginate,
+  Get,
+  Match,
+  Select,
+  Index,
+  Create,
+  Collection,
+  Join,
+  Call,
+  Function: Fn,
+  Delete,
+} = faunadb.query;
 
-// Set some defaults (required if your JSON file is empty)
-db.defaults({ tasks: [] }).write();
-
-/**
- * Service Methods
- */
-
-var findAll = async () => {
-  return db
-    .get('tasks')
-    .sort((a, b) => {
-      return (
-        getUnixTime(new Date(b.dateCreated)) -
-        getUnixTime(new Date(a.dateCreated))
-      );
-    })
-    .value();
-};
-
-var find = async (id) => {
-  const record = db.get('tasks').find({ id }).value();
-
-  if (record) {
-    return record;
-  }
-
-  throw new Error('No record found!');
-};
-
-var create = async (taskItem) => {
+const create = async (taskItem) => {
   const id = uuid.v4();
 
   const newTask = {
     ...taskItem,
+    user: Call(Fn('getUser'), 'nageshwar521'),
     dateCreated: new Date(),
     dateModified: new Date(),
     id,
   };
-  db.get('tasks').push(newTask).write();
+  const doc = await client.query(
+    Create(Collection('tasks'), { data: newTask })
+  );
+  return doc;
 };
 
-var update = async (updatedTask) => {
-  const oldTask = db.get('tasks').find({ id: updatedTask.id });
-  if (oldTask) {
-    oldTask
-      .assign(updatedTask, {
-        dateModified: new Date(),
+const update = async (taskItem) => {
+  const updatedTask = {
+    ...taskItem,
+    user: Call(Fn('getUser'), 'nageshwar521'),
+    dateModified: new Date(),
+  };
+  try {
+    await client.query(
+      Update(Ref(Collection('tasks'), taskItem.id), {
+        data: updatedTask,
       })
-      .write();
-    return;
+    );
+    return 'Update success';
+  } catch (error) {
+    return `Update Error: ${JSON.stringify(error)}`;
   }
-
-  throw new Error('No record found to update');
 };
 
-var remove = async (id) => {
-  const record = db.get('tasks').find({ id }).value();
+const find = async (id) => {
+  const doc = await client.query(Get(Ref(Collection('tasks'), id)));
 
-  if (record) {
-    db.get('tasks').remove({ id }).write();
-    return;
+  if (doc) {
+    return doc;
   }
 
-  throw new Error('No record found to delete');
+  return 'No record found!';
 };
 
+const findAll = async () => {
+  try {
+    const docs = await client.query(
+      Paginate(
+        Match(Index('tasks_by_user'), Call(Fn('getUser'), 'nageshwar521'))
+      )
+    );
+
+    return docs;
+  } catch (error) {
+    return `Get All Error: ${JSON.stringify(error)}`;
+  }
+};
+
+const remove = async (id) => {
+  try {
+    await client.query(Delete(Ref(Collection('tasks'), id)));
+
+    return 'Delete success';
+  } catch (error) {
+    return `Delete Error: ${JSON.stringify(error)}`;
+  }
+};
 module.exports = {
-  findAll,
-  find,
   create,
   update,
+  find,
+  findAll,
   remove,
 };

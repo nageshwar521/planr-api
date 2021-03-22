@@ -1,9 +1,9 @@
 const getSecretAccessToken = () => {
-  return process.env.ACCESS_TOKEN_SECRET ?? '';
+  return `${process.env.ACCESS_TOKEN_SECRET}`;
 };
 
 const getSecretRefreshToken = () => {
-  return process.env.REFRESH_TOKEN_SECRET ?? '';
+  return `${process.env.REFRESH_TOKEN_SECRET}`;
 };
 
 const fileFilter = (req, file, cb) => {
