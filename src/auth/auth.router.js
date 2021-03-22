@@ -33,15 +33,15 @@ authRouter.get('/public', async (req, res) => {
 
 authRouter.post('/login', async (req, res) => {
   const user = req.body;
-  const secretRefreshToken = getSecretRefreshToken();
-  if (secretRefreshToken) {
+  try {
+    const secretRefreshToken = getSecretRefreshToken();
     const refreshToken = await jwt.sign(user, secretRefreshToken);
     const accessToken = createAuthToken(user, secretRefreshToken);
     res.json(generateSuccessResponse({ accessToken, refreshToken }));
-  } else {
+  } catch (error) {
     res.json(
       generateErrorResponse({
-        error: `refresh token not found: ${secretRefreshToken}`,
+        error: `Login error: ${JSON.stringify(error)}`,
       })
     );
   }
