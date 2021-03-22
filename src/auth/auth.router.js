@@ -4,7 +4,7 @@
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { getSecretRefreshToken } = require('../common/common.utils');
+const { getSecretAccessToken } = require('../common/common.utils');
 const { createAuthToken } = require('./auth.utils');
 const {
   generateErrorResponse,
