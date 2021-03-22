@@ -34,20 +34,20 @@ authRouter.get('/public', async (req, res) => {
 authRouter.post('/login', async (req, res) => {
   const user = req.body;
 
-  res.json(
-    generateErrorResponse({
-      error: { user, refreshToken: 'refresh token error' },
-    })
-  );
+  // res.json(
+  //   generateErrorResponse({
+  //     error: { user, refreshToken: 'refresh token error' },
+  //   })
+  // );
 
-  // const secretRefreshToken = getSecretRefreshToken();
-  // if (secretRefreshToken) {
-  //   const refreshToken = await jwt.sign(user, secretRefreshToken);
-  //   const accessToken = createAuthToken(user, secretRefreshToken);
-  //   res.json(generateSuccessResponse({ accessToken, refreshToken }));
-  // } else {
-  //   res.json(generateErrorResponse({ error: 'refresh token not found' }));
-  // }
+  const secretRefreshToken = getSecretRefreshToken();
+  if (secretRefreshToken) {
+    const refreshToken = await jwt.sign(user, secretRefreshToken);
+    const accessToken = createAuthToken(user, secretRefreshToken);
+    res.json(generateSuccessResponse({ accessToken, refreshToken }));
+  } else {
+    res.json(generateErrorResponse({ error: 'refresh token not found' }));
+  }
 });
 
 //
