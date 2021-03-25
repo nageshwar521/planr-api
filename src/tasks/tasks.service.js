@@ -66,7 +66,7 @@ const findAll = async () => {
   try {
     const docs = await client.query(
       Paginate(
-        Match(Index('tasks_by_user'), Call(Fn('getUser'), 'nageshwar521'))
+        Match(Index('tasks_by_user'), Select("ref", Get(Match(Index("users_by_id"), "nageshwar521"))
       )
     );
 
