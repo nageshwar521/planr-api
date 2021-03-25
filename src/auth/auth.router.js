@@ -4,12 +4,12 @@
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { getSecretAccessToken } = require('../common/common.utils');
 const { createAuthToken } = require('./auth.utils');
 const {
   generateErrorResponse,
   generateSuccessResponse,
 } = require('../utils/generateResponse');
+const { accessTokenSecret } = require('../config');
 
 const refreshTokens = [];
 
@@ -34,12 +34,14 @@ authRouter.get('/public', async (req, res) => {
 authRouter.post('/login', async (req, res) => {
   const user = req.body;
   try {
-    const accessToken = createAuthToken(user.username, accessTokenSecret);
+    const accessToken = jwt.sign(user.username, accessTokenSecret);
+    console.log('accessToken');
+    console.log(accessToken);
     res.json(generateSuccessResponse({ accessToken }));
   } catch (error) {
     res.json(
       generateErrorResponse({
-        error: `Login error: ${JSON.stringify(user)}`,
+        error: `Login error: ${JSON.stringify(error)}`,
       })
     );
   }
