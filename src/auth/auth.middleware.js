@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { getSecretAccessToken } = require('../common/common.utils');
+const { accessTokenSecret } = require('../config');
 const { generateErrorResponse } = require('../utils/generateResponse');
 
 const verifyToken = (req, res, next) => {
@@ -16,12 +16,11 @@ const verifyToken = (req, res, next) => {
       .send(generateErrorResponse({ message: 'token not found', error: null }));
   }
   try {
-    const accessToken = getSecretAccessToken();
-    jwt.verify(token, accessToken, (err, user) => {
+    jwt.verify(token, accessTokenSecret, (err, user) => {
       if (err) {
         res.status(403).send(
           generateErrorResponse({
-            message: 'token verify failed',
+            message: 'tokens doesnot match',
             error: {
               err,
               token,
@@ -36,7 +35,7 @@ const verifyToken = (req, res, next) => {
   } catch (error) {
     res.status(403).send(
       generateErrorResponse({
-        message: 'secret token not found',
+        message: 'token verification failed',
         error: null,
       })
     );

@@ -34,8 +34,7 @@ authRouter.get('/public', async (req, res) => {
 authRouter.post('/login', async (req, res) => {
   const user = req.body;
   try {
-    const secretAccessToken = getSecretAccessToken();
-    const accessToken = createAuthToken(user, secretAccessToken);
+    const accessToken = createAuthToken(user.username, accessTokenSecret);
     res.json(generateSuccessResponse({ accessToken }));
   } catch (error) {
     res.json(
