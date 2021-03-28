@@ -16,6 +16,9 @@ const {
   Call,
   Function: Fn,
   Delete,
+  Lambda,
+  Var,
+  Map,
 } = faunadb.query;
 
 const create = (taskItem) => {
@@ -57,6 +60,7 @@ const findAll = () => {
 const remove = (id) => {
   return client.query(Delete(Ref(Collection('tasks'), id)));
 };
+
 module.exports = {
   create,
   update,

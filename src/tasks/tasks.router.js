@@ -28,11 +28,13 @@ tasksRouter.get('/', async (req, res) => {
   try {
     const userId = req.body.userId;
     const tasks = await tasksService.findAll();
-    console.log('tasks');
-    console.log(JSON.stringify(tasks, '', 2));
+    // console.log('tasks');
+    // console.log(JSON.stringify(tasks, '', 2));
 
     res.status(200).send(generateSuccessResponse(tasks));
   } catch (error) {
+    console.log('tasks error');
+    console.log(JSON.stringify(error, '', 2));
     res
       .status(500)
       .send(generateErrorResponse({ message: 'Something went wrong!', error }));
