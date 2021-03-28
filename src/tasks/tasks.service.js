@@ -18,7 +18,7 @@ const {
   Delete,
 } = faunadb.query;
 
-const create = async (taskItem) => {
+const create = (taskItem) => {
   const id = uuid.v4();
 
   const newTask = {
@@ -28,28 +28,28 @@ const create = async (taskItem) => {
     dateModified: new Date(),
     id,
   };
-  return await client.query(Create(Collection('tasks'), { data: newTask }));
+  return client.query(Create(Collection('tasks'), { data: newTask }));
 };
 
-const update = async (taskItem) => {
+const update = (taskItem) => {
   const updatedTask = {
     ...taskItem,
     user: Select('ref', Get(Match(Index('users_by_username'), 'nageshwar521'))),
     dateModified: new Date(),
   };
-  return await client.query(
+  return client.query(
     Update(Ref(Collection('tasks'), taskItem.id), {
       data: updatedTask,
     })
   );
 };
 
-const find = async (id) => {
-  return await client.query(Get(Ref(Collection('tasks'), id)));
+const find = (id) => {
+  return client.query(Get(Ref(Collection('tasks'), id)));
 };
 
-const findAll = async () => {
-  return await client.query(
+const findAll = () => {
+  return client.query(
     Paginate(
       Match(
         Index('tasks_by_username'),
@@ -59,8 +59,8 @@ const findAll = async () => {
   );
 };
 
-const remove = async (id) => {
-  return await client.query(Delete(Ref(Collection('tasks'), id)));
+const remove = (id) => {
+  return client.query(Delete(Ref(Collection('tasks'), id)));
 };
 module.exports = {
   create,

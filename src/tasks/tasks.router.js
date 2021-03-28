@@ -28,6 +28,8 @@ tasksRouter.get('/', async (req, res) => {
   try {
     const userId = req.body.userId;
     const tasks = await tasksService.findAll();
+    console.log('tasks');
+    console.log(JSON.stringify(tasks, '', 2));
 
     res.status(200).send(generateSuccessResponse(tasks));
   } catch (error) {
