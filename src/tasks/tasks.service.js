@@ -54,7 +54,10 @@ const find = (id) => {
 
 const findAll = () => {
   return client.query(
-    Map(Paginate(Match(Index('tasks_by_username'))), Lambda('x', Get(Var('x'))))
+    Map(
+      Paginate(Match(Index('tasks_by_username'))),
+      Lambda('x', Select(['title'], Get(Var('x'))))
+    )
   );
 };
 
