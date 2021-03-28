@@ -28,14 +28,7 @@ const create = async (taskItem) => {
     dateModified: new Date(),
     id,
   };
-  try {
-    const doc = await client.query(
-      Create(Collection('tasks'), { data: newTask })
-    );
-    return Promise.resolve(doc);
-  } catch (error) {
-    return Promise.reject(`Create error: ${JSON.stringify(error)}`);
-  }
+  return await client.query(Create(Collection('tasks'), { data: newTask }));
 };
 
 const update = async (taskItem) => {
@@ -44,53 +37,30 @@ const update = async (taskItem) => {
     user: Select('ref', Get(Match(Index('users_by_username'), 'nageshwar521'))),
     dateModified: new Date(),
   };
-  try {
-    await client.query(
-      Update(Ref(Collection('tasks'), taskItem.id), {
-        data: updatedTask,
-      })
-    );
-    return 'Update success';
-  } catch (error) {
-    return `Update Error: ${JSON.stringify(error)}`;
-  }
+  return await client.query(
+    Update(Ref(Collection('tasks'), taskItem.id), {
+      data: updatedTask,
+    })
+  );
 };
 
 const find = async (id) => {
-  const doc = await client.query(Get(Ref(Collection('tasks'), id)));
-
-  if (doc) {
-    return Promise.resolve(doc);
-  }
-
-  return Promise.reject('No record found!');
+  return await client.query(Get(Ref(Collection('tasks'), id)));
 };
 
 const findAll = async () => {
-  try {
-    const docs = await client.query(
-      Paginate(
-        Match(
-          Index('tasks_by_username'),
-          Select('ref', Get(Match(Index('users_by_username'), 'nageshwar521')))
-        )
+  return await client.query(
+    Paginate(
+      Match(
+        Index('tasks_by_username'),
+        Select('ref', Get(Match(Index('users_by_username'), 'nageshwar521')))
       )
-    );
-
-    return Promise.resolve(docs);
-  } catch (error) {
-    return Promise.reject(`Get All Error: ${JSON.stringify(error)}`);
-  }
+    )
+  );
 };
 
 const remove = async (id) => {
-  try {
-    await client.query(Delete(Ref(Collection('tasks'), id)));
-
-    return Promise.resolve('Delete success');
-  } catch (error) {
-    return Promise.reject(`Delete Error: ${JSON.stringify(error)}`);
-  }
+  return await client.query(Delete(Ref(Collection('tasks'), id)));
 };
 module.exports = {
   create,
