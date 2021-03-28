@@ -1,5 +1,6 @@
 const faunadb = require('faunadb');
 const uuid = require('uuid');
+const { formatDate } = require('../utils/dateUtils');
 
 const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET });
 
@@ -27,8 +28,8 @@ const create = (taskItem) => {
   const newTask = {
     ...taskItem,
     user: Select('ref', Get(Match(Index('users_by_username'), 'nageshwar521'))),
-    dateCreated: new Date(),
-    dateModified: new Date(),
+    dateCreated: formatDate(new Date()),
+    dateModified: formatDate(new Date()),
     id,
   };
   return client.query(Create(Collection('tasks'), { data: newTask }));
