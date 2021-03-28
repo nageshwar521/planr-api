@@ -34,7 +34,7 @@ tasksRouter.get('/', async (req, res) => {
     res.status(200).send(generateSuccessResponse(tasks));
   } catch (error) {
     res
-      .status(404)
+      .status(500)
       .send(generateErrorResponse({ message: 'Something went wrong!', error }));
   }
 });
@@ -50,7 +50,7 @@ tasksRouter.get('/', async (req, res) => {
     res.status(200).send(generateSuccessResponse(task));
   } catch (error) {
     res
-      .status(404)
+      .status(500)
       .send(generateErrorResponse({ message: 'Something went wrong!', error }));
   }
 });
@@ -70,7 +70,7 @@ tasksRouter.post('/', uploadFile.single('image'), async (req, res) => {
       .send(generateSuccessResponse({ message: 'Task add success!' }));
   } catch (error) {
     res
-      .status(404)
+      .status(500)
       .send(generateErrorResponse({ message: 'Create plan failed!', error }));
   }
 });
