@@ -35,8 +35,8 @@ const create = async (taskItem) => {
   const newTask = {
     ...taskItem,
     user: 'nageshwar521',
-    dateCreated: Date.now(),
-    dateModified: Date.now(),
+    dateCreated: new Date(),
+    dateModified: new Date(),
     id,
   };
   return client.query(Create(Collection('tasks'), { data: newTask }));
@@ -46,7 +46,7 @@ const update = (taskItem) => {
   const updatedTask = {
     ...taskItem,
     user: 'nageshwar521',
-    dateModified: Date.now(),
+    dateModified: new Date(),
   };
   return client.query(
     Update(Ref(Collection('tasks'), taskItem.id), {
