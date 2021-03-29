@@ -43,6 +43,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNo.QtXV5ZMUo5aCCdlHwU4nCBawY5_2
 
 POST http://192.168.0.103:7000/tasks
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNo.QtXV5ZMUo5aCCdlHwU4nCBawY5_2Mkb-5bAlz769CxA
+Content-Type: application/json
 
 {
   "title": "Learn React",

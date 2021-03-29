@@ -27,14 +27,14 @@ var tasksRouter = express.Router();
 tasksRouter.get('/', async (req, res) => {
   try {
     const userId = req.body.userId;
-    const tasks = await tasksService.findAll();
-    console.log('tasks success');
-    console.log(JSON.stringify(tasks, '', 2));
+    const { data } = await tasksService.findAll();
+    // console.log('tasks success');
+    // console.log(JSON.stringify(tasks, '', 2));
 
-    res.status(200).send(generateSuccessResponse(tasks));
+    res.status(200).send(generateSuccessResponse(data));
   } catch (error) {
-    console.log('tasks error');
-    console.log(JSON.stringify(error, '', 2));
+    // console.log('tasks error');
+    // console.log(JSON.stringify(error, '', 2));
     res
       .status(500)
       .send(generateErrorResponse({ message: 'Something went wrong!', error }));
@@ -64,14 +64,21 @@ tasksRouter.get('/', async (req, res) => {
 tasksRouter.post('/', uploadFile.single('image'), async (req, res) => {
   try {
     const task = req.body;
-    await tasksService.create(task);
+    // console.log('req');
+    // console.log(req);
+    const result = await tasksService.create(task);
+    console.log('result');
+    console.log(result);
     res
       .status(201)
       .send(generateSuccessResponse({ message: 'Task add success!' }));
   } catch (error) {
-    res
-      .status(500)
-      .send(generateErrorResponse({ message: 'Create plan failed!', error }));
+    res.status(500).send(
+      generateErrorResponse({
+        message: `Create plan failed! ${JSON.stringify(error)}`,
+        error,
+      })
+    );
   }
 });
 

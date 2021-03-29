@@ -1,6 +1,8 @@
 const faunadb = require('faunadb');
 const uuid = require('uuid');
 const { formatDate } = require('../utils/dateUtils');
+const format = require('date-fns');
+const { dateFormat } = require('../config');
 
 const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET });
 
@@ -20,37 +22,31 @@ const {
   Lambda,
   Var,
   Map,
+  Documents,
 } = faunadb.query;
 
-const create = (taskItem) => {
+const create = async (taskItem) => {
   // console.log('taskItem');
   // console.log(taskItem);
   const id = uuid.v4();
 
-  const user = Select(
-    'ref',
-    Get(Match(Index('user_by_username'), 'nageshwar521'))
-  );
-
-  // console.log('user');
-  // console.log(user);
+  // console.log('format(new Date(), dateFormat)');
+  // console.log(format(new Date(), dateFormat));
   const newTask = {
     ...taskItem,
-    user: user,
-    dateCreated: formatDate(new Date()),
-    dateModified: formatDate(new Date()),
+    user: 'nageshwar521',
+    dateCreated: Date.now(),
+    dateModified: Date.now(),
     id,
   };
-  // console.log('newTask');
-  // console.log(newTask);
   return client.query(Create(Collection('tasks'), { data: newTask }));
 };
 
 const update = (taskItem) => {
   const updatedTask = {
     ...taskItem,
-    user: Select('ref', Get(Match(Index('users_by_username'), 'nageshwar521'))),
-    dateModified: formatDate(new Date()),
+    user: 'nageshwar521',
+    dateModified: Date.now(),
   };
   return client.query(
     Update(Ref(Collection('tasks'), taskItem.id), {
@@ -66,8 +62,8 @@ const find = (id) => {
 const findAll = () => {
   return client.query(
     Map(
-      Paginate(Match(Index('tasks_by_username'))),
-      Lambda('x', Select(['title'], Get(Var('x'))))
+      Paginate(Documents(Collection('tasks'))),
+      Lambda('taskRef', Call(Fn('GetTask'), Select(['id'], Var('taskRef'))))
     )
   );
 };
