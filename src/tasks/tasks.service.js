@@ -23,15 +23,26 @@ const {
 } = faunadb.query;
 
 const create = (taskItem) => {
+  // console.log('taskItem');
+  // console.log(taskItem);
   const id = uuid.v4();
 
+  const user = Select(
+    'ref',
+    Get(Match(Index('user_by_username'), 'nageshwar521'))
+  );
+
+  // console.log('user');
+  // console.log(user);
   const newTask = {
     ...taskItem,
-    user: Select('ref', Get(Match(Index('users_by_username'), 'nageshwar521'))),
+    user: user,
     dateCreated: formatDate(new Date()),
     dateModified: formatDate(new Date()),
     id,
   };
+  // console.log('newTask');
+  // console.log(newTask);
   return client.query(Create(Collection('tasks'), { data: newTask }));
 };
 
@@ -39,7 +50,7 @@ const update = (taskItem) => {
   const updatedTask = {
     ...taskItem,
     user: Select('ref', Get(Match(Index('users_by_username'), 'nageshwar521'))),
-    dateModified: new Date(),
+    dateModified: formatDate(new Date()),
   };
   return client.query(
     Update(Ref(Collection('tasks'), taskItem.id), {

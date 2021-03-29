@@ -28,8 +28,8 @@ tasksRouter.get('/', async (req, res) => {
   try {
     const userId = req.body.userId;
     const tasks = await tasksService.findAll();
-    // console.log('tasks');
-    // console.log(JSON.stringify(tasks, '', 2));
+    console.log('tasks success');
+    console.log(JSON.stringify(tasks, '', 2));
 
     res.status(200).send(generateSuccessResponse(tasks));
   } catch (error) {
@@ -64,8 +64,6 @@ tasksRouter.get('/', async (req, res) => {
 tasksRouter.post('/', uploadFile.single('image'), async (req, res) => {
   try {
     const task = req.body;
-    console.log('req.files');
-    console.log(req.files);
     await tasksService.create(task);
     res
       .status(201)

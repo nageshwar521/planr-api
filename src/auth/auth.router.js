@@ -41,7 +41,7 @@ authRouter.post('/login', async (req, res) => {
   } catch (error) {
     res.json(
       generateErrorResponse({
-        error: `Login error: ${JSON.stringify(error)}`,
+        error: `Login user: ${JSON.stringify(user)}`,
       })
     );
   }

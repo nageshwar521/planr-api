@@ -26,6 +26,7 @@ Content-Type: application/json
   "username": "nagesh",
   "password": "pass"
 }
+
 ###
 
 POST http://192.168.0.103:7000/token
@@ -37,3 +38,16 @@ Content-Type: application/json
 
 GET http://192.168.0.103:7000/tasks
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNo.QtXV5ZMUo5aCCdlHwU4nCBawY5_2Mkb-5bAlz769CxA
+
+###
+
+POST http://192.168.0.103:7000/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNo.QtXV5ZMUo5aCCdlHwU4nCBawY5_2Mkb-5bAlz769CxA
+
+{
+  "title": "Learn React",
+  "description": "Nothing",
+  "targetDate": "2021-03-28"
+}
+
+###
