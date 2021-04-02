@@ -7,48 +7,46 @@ Content-Type: application/json
 }
 ###
 
-POST http://192.168.0.103:7000/token
-Content-Type: application/json
-
-{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hZ2VzaCIsImlkIjoiMyIsImlhdCI6MTYxNDg0NTMwOX0.UuaC4MOLAdbslshphgyDIp9_FeE-vJFcOtNcKVmtZQc"}
-
-###
-
 GET https://myplanr.netlify.app/.netlify/functions/server/tasks
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNo.QtXV5ZMUo5aCCdlHwU4nCBawY5_2Mkb-5bAlz769CxA
 
 ###
 
-POST http://192.168.0.103:7000/login
+POST http://192.168.0.101:7000/login
 Content-Type: application/json
 
 {
-  "username": "nagesh",
+  "username": "nageshwar521",
   "password": "pass"
 }
 
 ###
 
-POST http://192.168.0.103:7000/token
-Content-Type: application/json
-
-{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hZ2VzaCIsImlkIjoiMyIsImlhdCI6MTYxNDg0NTMwOX0.UuaC4MOLAdbslshphgyDIp9_FeE-vJFcOtNcKVmtZQc"}
-
-###
-
-GET http://192.168.0.103:7000/tasks
+GET http://192.168.0.101:7000/tasks
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNo.QtXV5ZMUo5aCCdlHwU4nCBawY5_2Mkb-5bAlz769CxA
 
 ###
 
-POST http://192.168.0.103:7000/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNo.QtXV5ZMUo5aCCdlHwU4nCBawY5_2Mkb-5bAlz769CxA
+POST http://192.168.0.101:7000/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNod2FyNTIx.SB5nAlANau9o8F0bfvlAnlwViEIggiRtimFm4FOkBAU
 Content-Type: application/json
 
 {
   "title": "Learn React",
   "description": "Nothing",
-  "targetDate": "2021-03-28"
+  "targetDate": "2021-04-17T09:14:00.000Z"
+}
+
+###
+
+PUT http://192.168.0.101:7000/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNod2FyNTIx.SB5nAlANau9o8F0bfvlAnlwViEIggiRtimFm4FOkBAU
+Content-Type: application/json
+
+{
+  "title": "Learn React Dev",
+  "description": "Nothing",
+  "id": "fbf14187-d372-44f1-b693-9ceae1a3bdd2"
 }
 
 ###

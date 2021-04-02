@@ -90,7 +90,13 @@ tasksRouter.put('/', uploadFile.single('image'), async (req, res) => {
   try {
     const task = req.body;
 
-    await tasksService.update(task);
+    console.log('put task');
+    console.log(task);
+
+    const result = await tasksService.update(task);
+
+    console.log('put result');
+    console.log(result);
 
     res
       .status(200)

@@ -1,8 +1,7 @@
 const faunadb = require('faunadb');
 const uuid = require('uuid');
-const { formatDate } = require('../utils/dateUtils');
-const format = require('date-fns');
-const { dateFormat } = require('../config');
+const format = require('date-fns/format');
+const { dbDateFormat } = require('../config');
 
 const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET });
 
@@ -26,17 +25,12 @@ const {
 } = faunadb.query;
 
 const create = async (taskItem) => {
-  // console.log('taskItem');
-  // console.log(taskItem);
   const id = uuid.v4();
 
-  // console.log('format(new Date(), dateFormat)');
-  // console.log(format(new Date(), dateFormat));
   const newTask = {
     ...taskItem,
-    user: 'nageshwar521',
-    dateCreated: new Date(),
-    dateModified: new Date(),
+    dateCreated: format(new Date(), dbDateFormat),
+    dateModified: format(new Date(), dbDateFormat),
     id,
   };
   return client.query(Create(Collection('tasks'), { data: newTask }));
@@ -45,9 +39,12 @@ const create = async (taskItem) => {
 const update = (taskItem) => {
   const updatedTask = {
     ...taskItem,
-    user: 'nageshwar521',
-    dateModified: new Date(),
+    dateModified: format(new Date(), dbDateFormat),
   };
+
+  console.log('update updatedTask');
+  console.log(updatedTask);
+
   return client.query(
     Update(Ref(Collection('tasks'), taskItem.id), {
       data: updatedTask,
