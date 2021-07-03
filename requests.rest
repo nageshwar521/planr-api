@@ -2,7 +2,7 @@ POST https://myplanr.netlify.app/.netlify/functions/server/login
 Content-Type: application/json
 
 {
-  "username": "nagesh",
+  "username": "nageshwar521",
   "password": "pass"
 }
 ###
@@ -12,7 +12,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNo.QtXV5ZMUo5aCCdlHwU4nCBawY5_2
 
 ###
 
-POST http://192.168.0.101:7000/login
+POST http://192.168.0.105:7000/login
 Content-Type: application/json
 
 {
@@ -22,12 +22,12 @@ Content-Type: application/json
 
 ###
 
-GET http://192.168.0.101:7000/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNo.QtXV5ZMUo5aCCdlHwU4nCBawY5_2Mkb-5bAlz769CxA
+GET http://192.168.0.105:7000/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hZ2VzaHdhcjUyMSIsInBhc3N3b3JkIjoicGFzcyIsImlhdCI6MTYxNzQ2ODYyMCwiZXhwIjoxNjE3NDcyMjIwfQ.-zDIpyH9weLl2R3XV1JLkLfzmLpXGSdewDRTv90Ip9o
 
 ###
 
-POST http://192.168.0.101:7000/tasks
+POST http://192.168.0.105:7000/tasks
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNod2FyNTIx.SB5nAlANau9o8F0bfvlAnlwViEIggiRtimFm4FOkBAU
 Content-Type: application/json
 
@@ -39,14 +39,14 @@ Content-Type: application/json
 
 ###
 
-PUT http://192.168.0.101:7000/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.bmFnZXNod2FyNTIx.SB5nAlANau9o8F0bfvlAnlwViEIggiRtimFm4FOkBAU
+PUT http://192.168.0.105:7000/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hZ2VzaHdhcjUyMSIsInBhc3N3b3JkIjoicGFzcyIsImlhdCI6MTYxNzQ2ODYyMCwiZXhwIjoxNjE3NDcyMjIwfQ.-zDIpyH9weLl2R3XV1JLkLfzmLpXGSdewDRTv90Ip9o
 Content-Type: application/json
 
 {
   "title": "Learn React Dev",
   "description": "Nothing",
-  "id": "fbf14187-d372-44f1-b693-9ceae1a3bdd2"
+  "id": "294571032296030727"
 }
 
 ###

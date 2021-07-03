@@ -1,9 +1,7 @@
-const faunadb = require('faunadb');
-const uuid = require('uuid');
-const format = require('date-fns/format');
-const { dbDateFormat } = require('../config');
-
-const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET });
+const faunadb = require("faunadb");
+const uuid = require("uuid");
+const format = require("date-fns/format");
+const { dbDateFormat, faunadbClient } = require("../config");
 
 const {
   Ref,
@@ -22,6 +20,7 @@ const {
   Var,
   Map,
   Documents,
+  Update,
 } = faunadb.query;
 
 const create = async (taskItem) => {
@@ -33,7 +32,7 @@ const create = async (taskItem) => {
     dateModified: format(new Date(), dbDateFormat),
     id,
   };
-  return client.query(Create(Collection('tasks'), { data: newTask }));
+  return faunadbClient.query(Create(Collection("tasks"), { data: newTask }));
 };
 
 const update = (taskItem) => {
@@ -42,31 +41,31 @@ const update = (taskItem) => {
     dateModified: format(new Date(), dbDateFormat),
   };
 
-  console.log('update updatedTask');
-  console.log(updatedTask);
+  // console.log("update updatedTask");
+  // console.log(updatedTask);
 
-  return client.query(
-    Update(Ref(Collection('tasks'), taskItem.id), {
+  return faunadbClient.query(
+    Update(Ref(Collection("tasks"), taskItem.id), {
       data: updatedTask,
     })
   );
 };
 
 const find = (id) => {
-  return client.query(Get(Ref(Collection('tasks'), id)));
+  return faunadbClient.query(Get(Ref(Collection("tasks"), id)));
 };
 
 const findAll = () => {
-  return client.query(
+  return faunadbClient.query(
     Map(
-      Paginate(Documents(Collection('tasks'))),
-      Lambda('taskRef', Call(Fn('GetTask'), Select(['id'], Var('taskRef'))))
+      Paginate(Documents(Collection("tasks"))),
+      Lambda("taskRef", Call(Fn("GetTask"), Select(["id"], Var("taskRef"))))
     )
   );
 };
 
 const remove = (id) => {
-  return client.query(Delete(Ref(Collection('tasks'), id)));
+  return faunadbClient.query(Delete(Ref(Collection("tasks"), id)));
 };
 
 module.exports = {

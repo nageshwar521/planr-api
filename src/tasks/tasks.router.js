@@ -2,13 +2,13 @@
 // ─── REQUIRED EXTERNAL MODULES AND INTERFACES ───────────────────────────────────
 //
 
-const express = require('express');
-const tasksService = require('./tasks.service');
-const { uploadFile } = require('../common/uploadFile.middleware');
+const express = require("express");
+const tasksService = require("./tasks.service");
+const { uploadFile } = require("../common/uploadFile.middleware");
 const {
   generateErrorResponse,
   generateSuccessResponse,
-} = require('../utils/generateResponse');
+} = require("../utils/generateResponse");
 
 //
 // ─── ROUTER DEFINITION ──────────────────────────────────────────────────────────
@@ -24,20 +24,21 @@ var tasksRouter = express.Router();
 // ─── GET TASKS ──────────────────────────────────────────────────────────────────
 //
 
-tasksRouter.get('/', async (req, res) => {
+tasksRouter.get("/", async (req, res) => {
   try {
-    const userId = req.body.userId;
+    // console.log("tasksRouter get");
+    // const userId = req.body.userId;
     const { data } = await tasksService.findAll();
-    // console.log('tasks success');
-    // console.log(JSON.stringify(tasks, '', 2));
+    // console.log("tasks success");
+    // console.log(JSON.stringify(tasks, "", 2));
 
     res.status(200).send(generateSuccessResponse(data));
   } catch (error) {
-    // console.log('tasks error');
-    // console.log(JSON.stringify(error, '', 2));
+    // console.log("tasks error");
+    // console.log(JSON.stringify(error, "", 2));
     res
       .status(500)
-      .send(generateErrorResponse({ message: 'Something went wrong!', error }));
+      .send(generateErrorResponse({ message: "Something went wrong!", error }));
   }
 });
 
@@ -45,7 +46,7 @@ tasksRouter.get('/', async (req, res) => {
 // ─── GET TASKS:ID ───────────────────────────────────────────────────────────────
 //
 
-tasksRouter.get('/', async (req, res) => {
+tasksRouter.get("/", async (req, res) => {
   try {
     const task = await tasksService.find(req.body.id);
 
@@ -53,7 +54,7 @@ tasksRouter.get('/', async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .send(generateErrorResponse({ message: 'Something went wrong!', error }));
+      .send(generateErrorResponse({ message: "Something went wrong!", error }));
   }
 });
 
@@ -61,17 +62,17 @@ tasksRouter.get('/', async (req, res) => {
 // ─── POST TASKS ─────────────────────────────────────────────────────────────────
 //
 
-tasksRouter.post('/', uploadFile.single('image'), async (req, res) => {
+tasksRouter.post("/", uploadFile.single("image"), async (req, res) => {
   try {
     const task = req.body;
     // console.log('req');
     // console.log(req);
     const result = await tasksService.create(task);
-    console.log('result');
-    console.log(result);
+    // console.log("result");
+    // console.log(result);
     res
       .status(201)
-      .send(generateSuccessResponse({ message: 'Task add success!' }));
+      .send(generateSuccessResponse({ message: "Task add success!" }));
   } catch (error) {
     res.status(500).send(
       generateErrorResponse({
@@ -86,25 +87,25 @@ tasksRouter.post('/', uploadFile.single('image'), async (req, res) => {
 // ─── PUT TASKS ──────────────────────────────────────────────────────────────────
 //
 
-tasksRouter.put('/', uploadFile.single('image'), async (req, res) => {
+tasksRouter.put("/", uploadFile.single("image"), async (req, res) => {
   try {
     const task = req.body;
 
-    console.log('put task');
-    console.log(task);
+    // console.log("put task");
+    // console.log(task);
 
     const result = await tasksService.update(task);
 
-    console.log('put result');
-    console.log(result);
+    // console.log("put result");
+    // console.log(result);
 
     res
       .status(200)
-      .send(generateSuccessResponse({ message: 'Task update success!' }));
+      .send(generateSuccessResponse({ message: "Task update success!" }));
   } catch (error) {
     res
       .status(500)
-      .send(generateErrorResponse({ message: 'Update plan failed!', error }));
+      .send(generateErrorResponse({ message: "Update task failed!", error }));
   }
 });
 
@@ -112,7 +113,7 @@ tasksRouter.put('/', uploadFile.single('image'), async (req, res) => {
 // ─── DELETE TASKS:ID ────────────────────────────────────────────────────────────
 //
 
-tasksRouter.delete('/', async (req, res) => {
+tasksRouter.delete("/", async (req, res) => {
   try {
     await tasksService.remove(req.body.id);
 
@@ -120,7 +121,7 @@ tasksRouter.delete('/', async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .send(generateErrorResponse({ message: 'Delete plan failed!', error }));
+      .send(generateErrorResponse({ message: "Delete plan failed!", error }));
   }
 });
 
